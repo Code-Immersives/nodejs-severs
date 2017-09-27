@@ -30,20 +30,41 @@ const fs = require('fs')
 const nfl = http.createServer((req, res) => {
   let url = req.url
   res.writeHead(200, {'Content-Type': 'text/html'})
-  switch (url) {
-    case '/':
-      let index = fs.readFileSync('index.html', 'utf-8')
-      res.write(index)
-      break
-    case '/raiders':
-      let pathName = url.substr(1, url.length)
-      let raiders = fs.readFileSync(`${pathName}.html`, 'utf-8')
-      res.write(raiders)
-      break
-    default:
-
+  if (url === '/') {
+    let index = fs.readFileSync('index.html', 'utf-8')
+    res.write(index)
+    res.end()
+  } else {
+    let pathName = url.substr(1, url.length)
+    fs.readFile(`${pathName}.html`, 'utf-8', (err, contents) => {
+      if (err) {
+        let notFound = fs.readFileSync(`404.html`, 'utf-8')
+        res.write(notFound)
+        res.end()
+      } else {
+        res.write(contents)
+        res.end()
+      }
+    })
   }
-  res.end()
+  // switch (url) {
+  //   case '/':
+  //     let index = fs.readFileSync('index.html', 'utf-8')
+  //     res.write(index)
+  //     break
+  //   case '/raiders':
+  //     pathName = url.substr(1, url.length)
+  //     let raiders = fs.readFileSync(`${pathName}.html`, 'utf-8')
+  //     res.write(raiders)
+  //     break
+  //   case '/cowboys':
+  //     pathName = url.substr(1, url.length)
+  //     let cowboys = fs.readFileSync(`${pathName}.html`, 'utf-8')
+  //     res.write(cowboys)
+  //     break
+  //   default:
+  //
+  // }
 })
 nfl.listen(3000)
 // use 3rd party node modules
