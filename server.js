@@ -29,9 +29,16 @@ server3.listen(2222)
 const fs = require('fs')
 const nfl = http.createServer((req, res) => {
   let url = req.url
-  res.writeHead(200, {'Content-Type': 'text/html'})
+  let queryString = ''
+  if (url.indexOf('?') >= 0) {
+    queryString = url.substring(url.indexOf('?') + 1, url.length)
+    // key=value&key2=value2
+  }
+  console.log(req.url, queryString)
+
   if (url === '/') {
     let index = fs.readFileSync('index.html', 'utf-8')
+    res.writeHead(200, {'Content-Type': 'text/html'})
     res.write(index)
     res.end()
   } else {
@@ -39,9 +46,11 @@ const nfl = http.createServer((req, res) => {
     fs.readFile(`${pathName}.html`, 'utf-8', (err, contents) => {
       if (err) {
         let notFound = fs.readFileSync(`404.html`, 'utf-8')
+        res.writeHead(404, {'Content-Type': 'text/html'})
         res.write(notFound)
         res.end()
       } else {
+        res.writeHead(200, {'Content-Type': 'text/html'})
         res.write(contents)
         res.end()
       }
