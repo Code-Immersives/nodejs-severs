@@ -26,6 +26,26 @@ const server3 = http.createServer((req, res) => {
 })
 server3.listen(2222)
 // check the request object for the url
+const fs = require('fs')
+const nfl = http.createServer((req, res) => {
+  let url = req.url
+  res.writeHead(200, {'Content-Type': 'text/html'})
+  switch (url) {
+    case '/':
+      let index = fs.readFileSync('index.html', 'utf-8')
+      res.write(index)
+      break
+    case '/raiders':
+      let pathName = url.substr(1, url.length)
+      let raiders = fs.readFileSync(`${pathName}.html`, 'utf-8')
+      res.write(raiders)
+      break
+    default:
+
+  }
+  res.end()
+})
+nfl.listen(3000)
 // use 3rd party node modules
 // based on url render different html files
 // maybe get into params
