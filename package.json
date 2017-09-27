@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-server",
+  "version": "1.0.0",
+  "description": "vanilla node server practice",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Code-Immersives/nodejs-severs.git"
+  },
+  "keywords": [
+    "servers",
+    "http"
+  ],
+  "author": "toneloke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Code-Immersives/nodejs-severs/issues"
+  },
+  "homepage": "https://github.com/Code-Immersives/nodejs-severs#readme"
+}
